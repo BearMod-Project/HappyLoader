@@ -1,0 +1,222 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BEAR-LOADER Native Integration Guide
+
+## Overview
+BEAR-LOADER uses JNI (Java Native Interface) for performance-critical operations and low-level system access. The native layer provides ESP rendering, memory manipulation, and anti-detection features.
+
+## 📁 Native Structure
+
+### Core Native Files
+- **Main Entry**: [main.cpp](mdc:app/src/main/jni/main.cpp) - Primary native interface
+- **ESP Core**: [esp.cpp](mdc:app/src/main/jni/esp.cpp) - ESP rendering engine
+- **Memory Operations**: [MemoryPatch.cpp](mdc:app/src/main/jni/MemoryPatch.cpp) - Memory patching utilities
+- **Socket Communication**: [Socket.cpp](mdc:app/src/main/jni/Socket.cpp) - Network communication
+- **Anti-Detection**: [AntiDetection.cpp](mdc:app/src/main/jni/AntiDetection.cpp) - Native anti-detection
+
+### Libraries
+- **libclient.so**: Main native library loaded by MainActivity
+- **libUE4.so**: Unreal Engine 4 hooks and utilities
+- **libmain.so**: Core functionality library
+
+## 🔧 JNI Methods
+
+### MainActivity Native Methods
+```java
+// Native library loading
+static {
+    System.loadLibrary("client");
+}
+
+// Native method declarations (examples)
+public static native void Init(Context context, int gameType);
+public static native void StartESP(int width, int height);
+public static native void StopESP();
+public static native void UpdateESPSettings(int flags);
+```
+
+### Memory Operations
+```cpp
+// Memory reading
+template<typename T>
+T Read(uintptr_t address) {
+    return vm_readv<T>(address);
+}
+
+// Memory writing
+template<typename T>
+void Write(uintptr_t address, T value) {
+    vm_writev(address, &value, sizeof(T));
+}
+```
+
+## 🎮 Game-Specific Offsets
+
+### PUBG Mobile Offsets (Example)
+```cpp
+// Update these based on game version
+namespace Offsets {
+    const uintptr_t GWorld = 0x08E2E408;
+    const uintptr_t GNames = 0x08C8B6F4;
+    const uintptr_t ViewMatrix = 0x1A0;
+    const uintptr_t PlayerController = 0x30;
+    const uintptr_t LocalPlayer = 0x0;
+}
+```
+
+## 🛡️ Anti-Detection Techniques
+
+### 1. Library Name Obfuscation
+```cpp
+// Use non-obvious library names
+const char* libName = "libsystem_ext.so";
+```
+
+### 2. Function Name Encryption
+```cpp
+// Encrypt function names
+const char* encryptedName = XorString("GameFunction");
+```
+
+### 3. Anti-Debug Checks
+```cpp
+bool IsDebuggerAttached() {
+    return ptrace(PTRACE_TRACEME, 0, 0, 0) == -1;
+}
+```
+
+## 🔍 ESP Implementation
+
+### Drawing Pipeline
+1. Read game memory for entity positions
+2. Convert world coordinates to screen coordinates
+3. Draw ESP elements (boxes, lines, text)
+4. Update overlay surface
+
+### ESP Features
+- Player ESP (boxes, skeleton, health)
+- Item ESP (weapons, armor, meds)
+- Vehicle ESP
+- Distance calculation
+- Team identification
+
+## 💾 Memory Management
+
+### Safe Memory Access
+```cpp
+bool IsValidAddress(uintptr_t addr) {
+    return addr > 0x10000000 && addr < 0x7FFFFFFFFF;
+}
+
+template<typename T>
+T SafeRead(uintptr_t address, T defaultValue) {
+    if (!IsValidAddress(address)) {
+        return defaultValue;
+    }
+    return Read<T>(address);
+}
+```
+
+### Memory Caching
+```cpp
+// Cache frequently accessed values
+std::unordered_map<uintptr_t, CachedValue> memoryCache;
+```
+
+## 🚀 Performance Optimization
+
+### 1. Batch Operations
+- Group memory reads to reduce syscalls
+- Batch draw calls for ESP rendering
+
+### 2. Threading
+- Separate threads for memory reading and rendering
+- Use atomic operations for thread safety
+
+### 3. Frame Rate Control
+```cpp
+// Limit ESP updates to 30 FPS
+const int ESP_UPDATE_INTERVAL = 33; // milliseconds
+```
+
+## 🔨 Building Native Code
+
+### Prerequisites
+- Android NDK r21 or later
+- CMake 3.10.2 or later
+- Ninja build system (optional)
+
+### Build Commands
+```bash
+# Build all architectures
+ndk-build
+
+# Build specific architecture
+ndk-build APP_ABI=arm64-v8a
+
+# Clean build
+ndk-build clean
+```
+
+### Android.mk Configuration
+```makefile
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := client
+LOCAL_SRC_FILES := main.cpp esp.cpp MemoryPatch.cpp
+LOCAL_LDLIBS := -llog -landroid -lGLESv2
+LOCAL_CFLAGS := -O3 -fvisibility=hidden
+include $(BUILD_SHARED_LIBRARY)
+```
+
+## ⚠️ Security Considerations
+
+### 1. Code Obfuscation
+- Use OLLVM or similar obfuscators
+- Strip debug symbols in release builds
+- Encrypt string literals
+
+### 2. Integrity Checks
+- Verify library signatures
+- Check for hooks/modifications
+- Validate function pointers
+
+### 3. Runtime Protection
+- Anti-dump measures
+- Memory encryption for sensitive data
+- Dynamic code loading
+
+## 🐛 Debugging Native Code
+
+### Android Studio
+1. Set breakpoints in native code
+2. Use "Debug" build variant
+3. Attach debugger to process
+
+### Logging
+```cpp
+#define LOG_TAG "BearLoader"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+```
+
+### Crash Analysis
+- Use addr2line for stack traces
+- Enable native crash reporting
+- Implement custom crash handler
+
+## 📝 Best Practices
+
+1. **Memory Safety**: Always validate addresses before access
+2. **Error Handling**: Implement proper exception handling
+3. **Resource Management**: Clean up native resources properly
+4. **Thread Safety**: Use mutexes for shared data
+5. **Performance**: Profile and optimize hot paths
+6. **Security**: Implement anti-tampering measures
+7. **Compatibility**: Test on various devices and Android versions
+
+

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:orientation="vertical">
+
+    <!-- Other Menu  -->
+    <LinearLayout
+        android:id="@+id/eefffa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/wkkw"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/cornertop"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:text="@string/tools_amp_misc"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/waskkw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eefffa"
+
+        android:background="@drawable/button_coming"
+        android:backgroundTint="@color/secodary"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.skydoves.powerspinner.PowerSpinnerView
+                    android:id="@+id/kerneldriver"
+                    android:layout_width="match_parent"
+                    android:layout_height="40.0dip"
+                    android:fontFamily="@font/en_regular"
+                    android:gravity="center"
+                    android:hint="Kernel Driver"
+                    android:padding="10.0dip"
+                    android:textColor="#fff"
+                    android:textColorHint="#ffff"
+                    android:textSize="14.5sp"
+                    android:textStyle="bold"
+                    app:spinner_arrow_animate="true"
+                    app:spinner_arrow_gravity="end"
+                    app:spinner_arrow_padding="8.0dip"
+                    app:spinner_arrow_tint="#fff"
+                    app:spinner_divider_color="#79FFFFFF"
+                    app:spinner_divider_show="true"
+                    app:spinner_divider_size="0.25dip"
+                    app:spinner_item_array="@array/kernellist"
+                    app:spinner_popup_animation="dropdown"
+                    app:spinner_popup_background="@drawable/custom_border_input1"
+                    app:spinner_popup_elevation="5.0dip"
+                    app:spinner_popup_focusable="true"
+                    app:spinner_preference_name="kernel"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/installKernelButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/kerneldriver"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="15dp"
+                    app:cornerRadius="10dp"
+                    app:elevation="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secodary2"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Install Kernel" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:weightSum="2">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/resetdevice"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/kerneldriver"
+                    app:cornerRadius="10dp"
+                    app:elevation="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secodary2"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Change Device ID" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/resetguest"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/kerneldriver"
+                    app:cornerRadius="10dp"
+                    app:elevation="10dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secodary2"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Reset Guest PUBGM" />
+
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!-- Other Menu  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/wkkw"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:layout_marginEnd="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/cornertop"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:text="Skin Config [Manual]"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/eefffa"
+        android:visibility="gone"
+        android:background="@drawable/button_coming"
+        android:backgroundTint="@color/secodary"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.skydoves.powerspinner.PowerSpinnerView
+                    android:id="@+id/skinkonfig"
+                    android:layout_width="match_parent"
+                    android:layout_height="40.0dip"
+                    android:fontFamily="@font/en_regular"
+                    android:gravity="center"
+                    android:hint="Config Skins"
+                    android:padding="10.0dip"
+                    android:textColor="#fff"
+                    android:textColorHint="#ffff"
+                    android:textSize="14.5sp"
+                    android:textStyle="bold"
+                    app:spinner_arrow_animate="true"
+                    app:spinner_arrow_gravity="end"
+                    app:spinner_arrow_padding="8.0dip"
+                    app:spinner_arrow_tint="#fff"
+                    app:spinner_divider_color="#79FFFFFF"
+                    app:spinner_divider_show="true"
+                    app:spinner_divider_size="0.25dip"
+                    app:spinner_item_array="@array/skinlist"
+                    app:spinner_popup_animation="dropdown"
+                    app:spinner_popup_background="@drawable/custom_border_input1"
+                    app:spinner_popup_elevation="5.0dip"
+                    app:spinner_popup_focusable="true"
+                    app:spinner_preference_name="kernel"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/installkonfig"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/kerneldriver"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="15dp"
+                    app:cornerRadius="10dp"
+                    app:elevation="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/secodary2"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Install Config" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

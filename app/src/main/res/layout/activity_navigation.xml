@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+
+    <!-- Nav root - noroot -->
+
+
+    <LinearLayout
+        android:id="@+id/watermark111"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/secodary"
+        android:gravity="center">
+
+
+        <TextView
+            android:id="@+id/textroot"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/en_regular"
+            android:gravity="center"
+            android:text="@string/activity_navigation_textroot_text" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/outline_gpp_good_24" />
+
+
+    </LinearLayout>
+
+
+    <!--<androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="70dp" />-->
+
+
+    <!-- Metode Manualy -->
+    <LinearLayout
+        android:id="@+id/imenu1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/activity_main" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/imenu2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/activity_other" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/imenu3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/activity_tools" />
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/awkdoawkwokdkdw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/secodary"
+            app:cardElevation="10dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/navhome"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/effecthome"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:padding="2dp"
+                        android:alpha="0.6"
+                        android:gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/button_install">
+
+                        <ImageView
+                            android:id="@+id/imghome"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/homeon"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/en_regular"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/home" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/navtool"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/effecttool"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:padding="2dp"
+                        android:alpha="0.6"
+                        android:gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/buttonshape">
+
+                        <ImageView
+                            android:id="@+id/imgtool"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_baseline_handyman_24" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/en_regular"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:text="Tools" />
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/navsetting"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/effectsetting"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:padding="2dp"
+                        android:alpha="0.6"
+                        android:gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/buttonshape">
+
+                        <ImageView
+                            android:id="@+id/imgsett"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/baseline_settings_24" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/en_regular"
+                        android:gravity="center"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/settings" />
+
+
+
+                </LinearLayout>
+
+
+                <!-- <com.google.android.material.bottomnavigation.BottomNavigationView
+                     android:id="@+id/bottomNavigationView"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center"
+                     android:background="@color/secodary"
+                     android:layoutDirection="ltr"
+                     app:labelVisibilityMode="auto"
+                     app:backgroundTint="@color/secodary"
+                     app:menu="@menu/bottom_nav_menu" />-->
+
+
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:forceDarkAllowed="true"
+                android:visibility="gone" />
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

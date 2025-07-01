@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="15dp"
+    android:elevation="20dp"
+    android:orientation="horizontal"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="16dp"
+    android:id="@+id/cardgame">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/okBtn"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="50dp"
+                app:cardBackgroundColor="@color/secodary2">
+
+                <TextView
+                    android:id="@+id/gameVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="3.3.1"
+                    android:gravity="center"
+                    android:fontFamily="@font/font1"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/statusCard"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="75dp"
+                app:cardBackgroundColor="@color/secodary2">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/status"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="📦 Install Game"
+                        android:gravity="center"
+                        android:fontFamily="@font/cof"
+                        android:textSize="9sp"
+                        android:textColor="@color/white"
+                        android:layout_centerInParent="true"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressIndicator"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerInParent="true"
+                        android:indeterminate="true"
+                        android:visibility="gone"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:indeterminateTint="@color/white"/>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/installIndicator"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/ic_error"
+                android:visibility="visible"
+                android:scaleType="centerCrop"
+                android:background="@drawable/circle"/>
+
+            <ImageView
+                android:id="@+id/gameIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pubg_global"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/selectionIndicator"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginStart="80dp"
+                android:src="@drawable/ic_check"
+                android:visibility="gone"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/IJO"/>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/gameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PUBGM GLOBAL"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/font1"
+            android:textSize="11sp"
+            android:textColor="@color/white"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+
+</LinearLayout>

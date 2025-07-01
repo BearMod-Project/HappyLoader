@@ -1,0 +1,560 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BEAR-LOADER ESP Features Guide
+
+## Overview
+BEAR-LOADER provides advanced ESP (Extra Sensory Perception) capabilities for supported games. This guide covers implementation, features, and optimization of the ESP system.
+
+## 🎯 ESP Architecture
+
+### Core ESP Components
+- **FloatService**: [FloatService.java](mdc:app/src/main/java/com/happy/pro/floating/FloatService.java) - Main ESP service
+- **Overlay**: [Overlay.java](mdc:app/src/main/java/com/happy/pro/floating/Overlay.java) - Overlay rendering system
+- **ESPView**: [ESPView.java](mdc:app/src/main/java/com/happy/pro/floating/ESPView.java) - Custom view for ESP elements
+- **Native ESP**: [esp.cpp](mdc:app/src/main/jni/esp.cpp) - Native ESP implementation
+
+## 🔍 ESP Features
+
+### 1. Player ESP
+```java
+public class PlayerESP {
+    private final Paint playerBoxPaint = new Paint();
+    private final Paint healthBarPaint = new Paint();
+    private final Paint distanceTextPaint = new Paint();
+    
+    public void drawPlayerESP(Canvas canvas, Player player) {
+        if (!player.isValid()) return;
+        
+        // Convert 3D world position to 2D screen coordinates
+        Vector2 screenPos = worldToScreen(player.getPosition());
+        if (!isOnScreen(screenPos)) return;
+        
+        // Draw player box
+        drawPlayerBox(canvas, screenPos, player);
+        
+        // Draw health bar
+        drawHealthBar(canvas, screenPos, player.getHealth());
+        
+        // Draw distance
+        drawDistance(canvas, screenPos, player.getDistance());
+        
+        // Draw skeleton (if enabled)
+        if (ESPSettings.showSkeleton) {
+            drawSkeleton(canvas, player);
+        }
+        
+        // Draw name tag
+        if (ESPSettings.showNames) {
+            drawNameTag(canvas, screenPos, player.getName());
+        }
+    }
+    
+    private void drawPlayerBox(Canvas canvas, Vector2 screenPos, Player player) {
+        // Set color based on team/enemy
+        playerBoxPaint.setColor(player.isEnemy() ? Color.RED : Color.GREEN);
+        playerBoxPaint.setStyle(Paint.Style.STROKE);
+        playerBoxPaint.setStrokeWidth(2f);
+        
+        // Calculate box dimensions
+        float boxHeight = 100f;
+        float boxWidth = 50f;
+        
+        // Draw rectangle
+        canvas.drawRect(
+            screenPos.x - boxWidth/2,
+            screenPos.y - boxHeight,
+            screenPos.x + boxWidth/2,
+            screenPos.y,
+            playerBoxPaint
+        );
+    }
+}
+```
+
+### 2. Item ESP
+```java
+public class ItemESP {
+    private final Map<ItemType, Integer> itemColors = new HashMap<>();
+    
+    public void initializeItemColors() {
+        itemColors.put(ItemType.WEAPON, Color.YELLOW);
+        itemColors.put(ItemType.ARMOR, Color.BLUE);
+        itemColors.put(ItemType.MEDKIT, Color.GREEN);
+        itemColors.put(ItemType.AMMO, Color.CYAN);
+        itemColors.put(ItemType.SCOPE, Color.MAGENTA);
+    }
+    
+    public void drawItemESP(Canvas canvas, List<Item> items) {
+        for (Item item : items) {
+            if (!item.isValid() || item.getDistance() > ESPSettings.maxItemDistance) {
+                continue;
+            }
+            
+            Vector2 screenPos = worldToScreen(item.getPosition());
+            if (!isOnScreen(screenPos)) continue;
+            
+            // Draw item icon/box
+            drawItemBox(canvas, screenPos, item);
+            
+            // Draw item name
+            drawItemName(canvas, screenPos, item);
+            
+            // Draw distance
+            drawItemDistance(canvas, screenPos, item.getDistance());
+        }
+    }
+    
+    private void drawItemBox(Canvas canvas, Vector2 screenPos, Item item) {
+        Paint paint = new Paint();
+        paint.setColor(itemColors.getOrDefault(item.getType(), Color.WHITE));
+        paint.setStyle(Paint.Style.FILL);
+        
+        canvas.drawCircle(screenPos.x, screenPos.y, 8f, paint);
+    }
+}
+```
+
+### 3. Aimbot System
+```java
+public class AimbotSystem {
+    private Player currentTarget;
+    private final AimbotSettings settings = new AimbotSettings();
+    
+    public void updateAimbot() {
+        if (!settings.enabled) return;
+        
+        // Find best target
+        Player bestTarget = findBestTarget();
+        if (bestTarget == null) return;
+        
+        currentTarget = bestTarget;
+        
+        // Calculate aim angles
+        Vector3 targetPos = predictTargetPosition(bestTarget);
+        Vector2 aimAngles = calculateAimAngles(targetPos);
+        
+        // Apply smoothing
+        Vector2 smoothedAngles = applySmoothAim(aimAngles);
+        
+        // Set aim angles
+        if (settings.smoothAim) {
+            setAimAnglesSmooth(smoothedAngles);
+        } else {
+            setAimAngles(smoothedAngles);
+        }
+    }
+    
+    private Player findBestTarget() {
+        Player bestTarget = null;
+        float bestScore = Float.MAX_VALUE;
+        
+        for (Player player : getEnemyPlayers()) {
+            if (!player.isValid() || !player.isVisible()) continue;
+            
+            float distance = player.getDistance();
+            if (distance > settings.maxDistance) continue;
+            
+            Vector2 screenPos = worldToScreen(player.getPosition());
+            float fovDistance = calculateFOVDistance(screenPos);
+            
+            if (fovDistance > settings.fovRadius) continue;
+            
+            // Calculate targeting score (lower is better)
+            float score = (fovDistance * 0.7f) + (distance * 0.3f);
+            
+            if (score < bestScore) {
+                bestScore = score;
+                bestTarget = player;
+            }
+        }
+        
+        return bestTarget;
+    }
+    
+    private Vector3 predictTargetPosition(Player target) {
+        if (!settings.prediction) {
+            return target.getPosition();
+        }
+        
+        Vector3 velocity = target.getVelocity();
+        float bulletTime = calculateBulletTravelTime(target.getDistance());
+        
+        Vector3 predictedPos = target.getPosition();
+        predictedPos.x += velocity.x * bulletTime;
+        predictedPos.y += velocity.y * bulletTime;
+        predictedPos.z += velocity.z * bulletTime;
+        
+        return predictedPos;
+    }
+}
+```
+
+### 4. Magic Bullet
+```java
+public class MagicBullet {
+    private final MagicBulletSettings settings = new MagicBulletSettings();
+    
+    public void processBulletFire(Vector3 firePosition, Vector3 fireDirection) {
+        if (!settings.enabled) return;
+        
+        // Find all enemies in bullet path
+        List<Player> targets = findTargetsInPath(firePosition, fireDirection);
+        
+        if (targets.isEmpty()) return;
+        
+        // Select primary target
+        Player primaryTarget = selectPrimaryTarget(targets);
+        
+        // Redirect bullet to target
+        Vector3 targetPosition = getTargetHitbox(primaryTarget);
+        redirectBullet(firePosition, targetPosition);
+        
+        // Apply damage to all targets (if multi-hit enabled)
+        if (settings.multiHit) {
+            for (Player target : targets) {
+                applyBulletDamage(target, settings.damage);
+            }
+        }
+    }
+    
+    private void redirectBullet(Vector3 from, Vector3 to) {
+        // Calculate new bullet trajectory
+        Vector3 direction = to.subtract(from).normalize();
+        
+        // Update bullet physics
+        setBulletDirection(direction);
+        setBulletTarget(to);
+    }
+    
+    private Vector3 getTargetHitbox(Player target) {
+        Vector3 position = target.getPosition();
+        
+        switch (settings.targetBone) {
+            case HEAD:
+                position.z += 1.7f; // Head height offset
+                break;
+            case CHEST:
+                position.z += 1.2f; // Chest height offset
+                break;
+            case LEGS:
+                position.z += 0.5f; // Leg height offset
+                break;
+        }
+        
+        return position;
+    }
+}
+```
+
+## 🎨 Rendering System
+
+### Overlay Management
+```java
+public class ESPOverlayManager {
+    private WindowManager windowManager;
+    private ESPView espView;
+    private WindowManager.LayoutParams layoutParams;
+    
+    public void createOverlay() {
+        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        espView = new ESPView(context);
+        
+        layoutParams = new WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O 
+                ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+                : WindowManager.LayoutParams.TYPE_PHONE,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSLUCENT
+        );
+        
+        windowManager.addView(espView, layoutParams);
+    }
+    
+    public void updateOverlay() {
+        if (espView != null) {
+            espView.invalidate(); // Trigger redraw
+        }
+    }
+}
+```
+
+### Custom ESP View
+```java
+public class ESPView extends View {
+    private final Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final List<ESPElement> espElements = new ArrayList<>();
+    
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        
+        // Clear previous frame
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        
+        // Update ESP data
+        updateESPData();
+        
+        // Draw all ESP elements
+        for (ESPElement element : espElements) {
+            element.draw(canvas);
+        }
+        
+        // Draw crosshair
+        if (ESPSettings.showCrosshair) {
+            drawCrosshair(canvas);
+        }
+        
+        // Draw radar
+        if (ESPSettings.showRadar) {
+            drawRadar(canvas);
+        }
+    }
+    
+    private void updateESPData() {
+        espElements.clear();
+        
+        // Add player ESP elements
+        for (Player player : getPlayers()) {
+            if (player.isValid()) {
+                espElements.add(new PlayerESPElement(player));
+            }
+        }
+        
+        // Add item ESP elements
+        for (Item item : getItems()) {
+            if (item.isValid()) {
+                espElements.add(new ItemESPElement(item));
+            }
+        }
+    }
+}
+```
+
+## ⚙️ ESP Settings
+
+### Configuration System
+```java
+public class ESPSettings {
+    // Player ESP
+    public static boolean showPlayerESP = true;
+    public static boolean showPlayerBoxes = true;
+    public static boolean showPlayerNames = true;
+    public static boolean showPlayerHealth = true;
+    public static boolean showPlayerDistance = true;
+    public static boolean showSkeleton = false;
+    public static float maxPlayerDistance = 300f;
+    
+    // Item ESP
+    public static boolean showItemESP = true;
+    public static boolean showWeapons = true;
+    public static boolean showArmor = true;
+    public static boolean showMedkits = true;
+    public static boolean showAmmo = false;
+    public static float maxItemDistance = 100f;
+    
+    // Aimbot
+    public static boolean aimbotEnabled = false;
+    public static float aimbotFOV = 60f;
+    public static float aimbotSmooth = 5f;
+    public static boolean aimbotPrediction = true;
+    
+    // Magic Bullet
+    public static boolean magicBulletEnabled = false;
+    public static boolean multiHit = false;
+    public static int bulletDamage = 100;
+    
+    public static void saveSettings(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("esp_settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        
+        editor.putBoolean("show_player_esp", showPlayerESP);
+        editor.putBoolean("show_player_boxes", showPlayerBoxes);
+        editor.putFloat("max_player_distance", maxPlayerDistance);
+        // ... save all settings
+        
+        editor.apply();
+    }
+    
+    public static void loadSettings(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("esp_settings", Context.MODE_PRIVATE);
+        
+        showPlayerESP = prefs.getBoolean("show_player_esp", true);
+        showPlayerBoxes = prefs.getBoolean("show_player_boxes", true);
+        maxPlayerDistance = prefs.getFloat("max_player_distance", 300f);
+        // ... load all settings
+    }
+}
+```
+
+## 🚀 Performance Optimization
+
+### Frame Rate Management
+```java
+public class ESPFrameManager {
+    private static final int TARGET_FPS = 30;
+    private static final long FRAME_TIME_MS = 1000 / TARGET_FPS;
+    
+    private long lastFrameTime = 0;
+    private final Handler frameHandler = new Handler();
+    
+    public void startESPUpdates() {
+        frameHandler.post(frameUpdateRunnable);
+    }
+    
+    private final Runnable frameUpdateRunnable = new Runnable() {
+        @Override
+        public void run() {
+            long currentTime = System.currentTimeMillis();
+            
+            if (currentTime - lastFrameTime >= FRAME_TIME_MS) {
+                updateESP();
+                lastFrameTime = currentTime;
+            }
+            
+            frameHandler.postDelayed(this, 16); // ~60 FPS scheduling
+        }
+    };
+    
+    private void updateESP() {
+        // Update game data
+        updateGameData();
+        
+        // Update ESP overlay
+        if (espOverlay != null) {
+            espOverlay.updateOverlay();
+        }
+    }
+}
+```
+
+### Memory Optimization
+```java
+public class ESPMemoryManager {
+    private final Queue<ESPElement> elementPool = new ArrayDeque<>();
+    private final int MAX_POOL_SIZE = 100;
+    
+    public ESPElement getESPElement() {
+        ESPElement element = elementPool.poll();
+        if (element == null) {
+            element = new ESPElement();
+        }
+        return element;
+    }
+    
+    public void recycleESPElement(ESPElement element) {
+        if (elementPool.size() < MAX_POOL_SIZE) {
+            element.reset();
+            elementPool.offer(element);
+        }
+    }
+    
+    public void clearMemoryCache() {
+        elementPool.clear();
+        System.gc(); // Suggest garbage collection
+    }
+}
+```
+
+## 🎮 Game-Specific Implementations
+
+### PUBG Mobile ESP
+```java
+public class PUBGMobileESP extends BaseESP {
+    // PUBG-specific offsets (update per game version)
+    private static final long GWORLD_OFFSET = 0x08E2E408L;
+    private static final long ENTITY_LIST_OFFSET = 0x98L;
+    private static final long PLAYER_CONTROLLER_OFFSET = 0x30L;
+    
+    @Override
+    protected List<Player> getPlayers() {
+        List<Player> players = new ArrayList<>();
+        
+        try {
+            long gWorld = readMemory(GWORLD_OFFSET);
+            long entityList = readMemory(gWorld + ENTITY_LIST_OFFSET);
+            
+            for (int i = 0; i < 100; i++) { // Max 100 players
+                long playerPtr = readMemory(entityList + (i * 8));
+                if (playerPtr == 0) continue;
+                
+                Player player = readPlayerData(playerPtr);
+                if (player.isValid()) {
+                    players.add(player);
+                }
+            }
+        } catch (Exception e) {
+            FLog.error("Failed to read PUBG player data: " + e.getMessage());
+        }
+        
+        return players;
+    }
+    
+    private Player readPlayerData(long playerPtr) {
+        Player player = new Player();
+        
+        // Read position
+        Vector3 position = readVector3(playerPtr + 0x1A0);
+        player.setPosition(position);
+        
+        // Read health
+        float health = readFloat(playerPtr + 0x108);
+        player.setHealth(health);
+        
+        // Read team ID
+        int teamId = readInt(playerPtr + 0x150);
+        player.setTeamId(teamId);
+        
+        return player;
+    }
+}
+```
+
+## 🐛 Debugging ESP
+
+### ESP Debug Information
+```java
+public class ESPDebugger {
+    private boolean debugEnabled = false;
+    
+    public void drawDebugInfo(Canvas canvas) {
+        if (!debugEnabled) return;
+        
+        Paint debugPaint = new Paint();
+        debugPaint.setColor(Color.WHITE);
+        debugPaint.setTextSize(20f);
+        
+        // Draw FPS
+        String fpsText = "FPS: " + calculateFPS();
+        canvas.drawText(fpsText, 10, 30, debugPaint);
+        
+        // Draw player count
+        String playerText = "Players: " + getPlayerCount();
+        canvas.drawText(playerText, 10, 60, debugPaint);
+        
+        // Draw memory usage
+        String memoryText = "Memory: " + getMemoryUsage() + " MB";
+        canvas.drawText(memoryText, 10, 90, debugPaint);
+        
+        // Draw security status
+        String securityText = "Security: " + getSecurityStatus();
+        canvas.drawText(securityText, 10, 120, debugPaint);
+    }
+    
+    public void logESPStatistics() {
+        FLog.info("ESP Statistics:");
+        FLog.info("- FPS: " + calculateFPS());
+        FLog.info("- Players rendered: " + getPlayerCount());
+        FLog.info("- Items rendered: " + getItemCount());
+        FLog.info("- Memory usage: " + getMemoryUsage() + " MB");
+    }
+}
+```
+
+

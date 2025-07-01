@@ -1,0 +1,112 @@
+{
+  "app_config": {
+    "version": "3.0.0",
+    "version_code": 100,
+    "build_date": "2025-06-30",
+    "min_android_version": 28,
+    "target_android_version": 35
+  },
+    "api_endpoints": {
+    "main_server": "https://your-keyauth-server.com",
+    "backup_server": "https://your-backup-server.com", 
+    "update_server": "https://your-update-server.com",
+    "config_server": "https://your-config-server.com"
+  },
+  "keyauth_config": {
+    "app_name": "BEAR-LOADER",
+    "owner_id": "YOUR_ACTUAL_OWNER_ID",
+    "app_secret": "YOUR_ACTUAL_APP_SECRET",
+    "version": "3.0.0"
+  },
+  "update_config": {
+    "check_interval_hours": 24,
+    "force_update": false,
+    "download_url": "https://downloads.bear-loader.com/latest.apk",
+    "changelog_url": "https://bear-loader.com/changelog.json"
+  },
+  "security_config": {
+    "enable_stealth_mode": true,
+    "enable_anti_debug": true,
+    "enable_memory_protection": true,
+    "enable_signature_verification": true,
+    "max_login_attempts": 3,
+    "session_timeout_minutes": 60
+  },
+  "features": {
+    "esp_enabled": true,
+    "aimbot_enabled": true,
+    "memory_hacking_enabled": true,
+    "container_mode_enabled": true,
+    "root_mode_enabled": true
+  },
+  "supported_games": {
+    "pubg_global": {
+      "package_name": "com.tencent.ig",
+      "version": "2.9.0",
+      "supported": true,
+      "esp_config": {
+        "player_esp": true,
+        "item_esp": true,
+        "vehicle_esp": true,
+        "distance_esp": true
+      }
+    },
+    "pubg_korea": {
+      "package_name": "com.pubg.krmobile",
+      "version": "2.9.0",
+      "supported": true,
+      "esp_config": {
+        "player_esp": true,
+        "item_esp": true,
+        "vehicle_esp": true,
+        "distance_esp": true
+      }
+    },
+    "pubg_vietnam": {
+      "package_name": "com.vng.pubgmobile",
+      "version": "2.9.0",
+      "supported": true,
+      "esp_config": {
+        "player_esp": true,
+        "item_esp": true,
+        "vehicle_esp": true,
+        "distance_esp": true
+      }
+    },
+    "bgmi": {
+      "package_name": "com.pubg.imobile",
+      "version": "2.9.0",
+      "supported": true,
+      "esp_config": {
+        "player_esp": true,
+        "item_esp": true,
+        "vehicle_esp": true,
+        "distance_esp": true
+      }
+    }
+  },
+  "social_links": {
+    "telegram": "https://t.me/bear_loader_support",
+    "discord": "https://discord.gg/bearloader",
+    "website": "https://bear-loader.com",
+    "support": "https://support.bear-loader.com"
+  },
+  "licensing": {
+    "trial_days": 3,
+    "max_devices_per_license": 2,
+    "license_types": {
+      "free": {
+        "duration_days": 1,
+        "features": ["basic_esp", "basic_aimbot"]
+      },
+      "premium": {
+        "duration_days": 30,
+        "features": ["full_esp", "advanced_aimbot", "memory_hacking", "container_mode"]
+      },
+      "enterprise": {
+        "duration_days": 365,
+        "features": ["all_features", "priority_support", "custom_config"]
+      }
+    }
+  }
+} 

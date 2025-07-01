@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:alpha="0.8"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Protection Cheats"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/menuloho"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/button_install"
+                    android:elevation="10dp"
+                    android:padding="5dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/img1"
+                        android:layout_width="30dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/shield"
+                        android:backgroundTint="@color/button" />
+
+                    <TextView
+                        android:id="@+id/textlogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:alpha="0.8"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center|start"
+                        android:text="Protection Cheat Disable"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="normal" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/menuisland"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_install"
+                android:elevation="10dp"
+                android:padding="5dp"
+                android:visibility="visible"
+                app:cardCornerRadius="10dp">
+
+
+                <ImageView
+                    android:id="@+id/img2"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/shield"
+                    android:backgroundTint="@color/button" />
+
+                <TextView
+                    android:id="@+id/textisland"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center|start"
+                    android:text="Island Block Disable"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:alpha="0.8"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/render_framerate"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/fps30"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="4.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/tbutton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:tag="1"
+                    android:text="@string/_30fps"
+                    android:textColor="#FFFFFFFF"
+                    android:textOff="@string/_30fps"
+                    android:textOn="@string/_30fps"
+                    android:textSize="12.0dip"
+                    android:textStyle="bold" />
+
+                <ToggleButton
+                    android:id="@+id/fps60"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="4.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/tbutton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:tag="1"
+                    android:text="@string/esp_visual_fps30_text"
+                    android:textColor="#FFFFFFFF"
+                    android:textOff="@string/esp_visual_fps30_text"
+                    android:textOn="@string/esp_visual_fps30_text"
+                    android:textSize="12.0dip"
+                    android:textStyle="bold" />
+
+                <ToggleButton
+                    android:id="@+id/fps90"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="4.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/tbutton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:tag="2"
+                    android:text="@string/esp_visual_fps60_text"
+                    android:textColor="#FFFFFFFF"
+                    android:textOff="@string/esp_visual_fps60_text"
+                    android:textOn="@string/esp_visual_fps60_text"
+                    android:textSize="12.0dip"
+                    android:textStyle="bold" />
+
+                <ToggleButton
+                    android:id="@+id/fps120"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="4.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/tbutton"
+                    android:fontFamily="@font/poppins_medium"
+                    android:tag="3"
+                    android:text="@string/esp_visual_fps120_text"
+                    android:textColor="#FFFFFFFF"
+                    android:textOff="@string/esp_visual_fps120_text"
+                    android:textOn="@string/esp_visual_fps120_text"
+                    android:textSize="12.0dip"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:alpha="0.8"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/esp_generic_adjustment"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <ToggleButton
+                android:id="@+id/isenableesp"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_margin="4.0dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/tbutton"
+                android:checked="false"
+                android:fontFamily="@font/poppins_medium"
+                android:tag="0"
+                android:text="@string/esp_visual_isenableesp_text"
+                android:textColor="#FFFFFFFF"
+                android:textOff="@string/esp_visual_isenableesp_text"
+                android:textOn="@string/esp_visual_isenableesp_text"
+                android:textSize="12.0dip"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ToggleButton
+                        android:id="@+id/isline"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isline_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isline_text"
+                        android:textOn="@string/esp_visual_isline_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/isBox"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isBox_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isBox_text"
+                        android:textOn="@string/esp_visual_isBox_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ToggleButton
+                        android:id="@+id/isskeleton"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isskeleton_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isskeleton_text"
+                        android:textOn="@string/esp_visual_isskeleton_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/ishealth"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_ishealth_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_ishealth_text"
+                        android:textOn="@string/esp_visual_ishealth_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ToggleButton
+                        android:id="@+id/isName"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isName_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isName_text"
+                        android:textOn="@string/esp_visual_isName_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/ishead"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_ishead_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_ishead_text"
+                        android:textOn="@string/esp_visual_ishead_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ToggleButton
+                        android:id="@+id/isweaponicon"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/weapon_icon"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/weapon_icon"
+                        android:textOn="@string/weapon_icon"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/isweapon"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isweapon_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isweapon_text"
+                        android:textOn="@string/esp_visual_isweapon_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ToggleButton
+                        android:id="@+id/isalert"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isalert_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isalert_text"
+                        android:textOn="@string/esp_visual_isalert_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/isthrowables"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isthrowables_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isthrowables_text"
+                        android:textOn="@string/esp_visual_isthrowables_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ToggleButton
+                        android:id="@+id/isdistance"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isdistance_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isdistance_text"
+                        android:textOn="@string/esp_visual_isdistance_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                    <ToggleButton
+                        android:id="@+id/isnobot"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_margin="4.0dip"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/tbutton"
+                        android:fontFamily="@font/poppins_medium"
+                        android:tag="0"
+                        android:text="@string/esp_visual_isnobot_text"
+                        android:textColor="#FFFFFFFF"
+                        android:textOff="@string/esp_visual_isnobot_text"
+                        android:textOn="@string/esp_visual_isnobot_text"
+                        android:textSize="12.0dip"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <ToggleButton
+                    android:id="@+id/isLootBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="4.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/tbutton"
+                    android:checked="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:tag="0"
+                    android:text="@string/lootbox"
+                    android:textColor="#FFFFFFFF"
+                    android:textOff="@string/lootbox"
+                    android:textOn="@string/lootbox"
+                    android:textSize="12.0dip"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:alpha="0.8"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/show_player_radar_map"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:textStyle="normal" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="@string/displays_a_map_of_enemy_presence"
+                                android:textColor="@color/whitegelap"
+                                android:textSize="11sp" />
+
+
+                            <TextView
+                                android:id="@+id/radartext"
+                                android:layout_width="40dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_weight="1"
+                                android:alpha="0.8"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="@string/esp_visual_radartext_text"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+
+                        <SeekBar
+                            android:id="@+id/strokeradar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:max="500"
+                            android:progress="130"
+                            android:progressDrawable="@drawable/proggress"
+                            android:thumb="@drawable/thumb" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -1,0 +1,639 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BEAR-LOADER Testing & Deployment Guide
+
+## Overview
+This guide covers comprehensive testing strategies, debugging procedures, and deployment processes for BEAR-LOADER 3.0.0 Enterprise Architecture.
+
+## 🧪 Testing Strategy
+
+### 1. Unit Testing
+```java
+@RunWith(AndroidJUnit4.class)
+public class BearLoaderSecurityTest {
+    
+    @Test
+    public void testSignatureVerification() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        
+        // Test BEAR-LOADER signature validation
+        boolean isAuthentic = SignatureVerifier.isBearLoaderAuthentic(context);
+        assertTrue("BEAR-LOADER signature should be valid", isAuthentic);
+        
+        // Test security check
+        SecurityCheckResult result = SignatureVerifier.performSecurityCheck(context, "com.tencent.ig");
+        assertNotNull("Security check result should not be null", result);
+        assertTrue("Security check should pass", result.isSecure());
+    }
+    
+    @Test
+    public void testAntiDetectionMechanisms() {
+        AntiDetectionManager manager = AntiDetectionManager.getInstance();
+        
+        // Test root detection bypass
+        SecurityStatus status = manager.performAntiDetectionChecks();
+        assertNotNull("Security status should not be null", status);
+        
+        // Verify bypass mechanisms are active
+        assertTrue("Root bypass should be active", status.rootBypassActive);
+    }
+    
+    @Test
+    public void testContainerSystem() {
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        BearContainerManager container = BearContainerManager.getInstance(context);
+        
+        assertTrue("Container should be initialized", container.isContainerInitialized());
+        
+        // Test container status
+        String status = container.getContainerStatus();
+        assertNotNull("Container status should not be null", status);
+        assertTrue("Container status should indicate initialization", status.contains("Initialized: ✅"));
+    }
+}
+```
+
+### 2. Integration Testing
+```java
+@RunWith(AndroidJUnit4.class)
+public class BearLoaderIntegrationTest {
+    
+    @Test
+    public void testSecurityLayerIntegration() {
+        // Test Layer 1: Memory Protection
+        BearMemoryProtection memoryProtection = BearMemoryProtection.getInstance();
+        assertTrue("Memory protection should be enabled", memoryProtection.enableMemoryProtection());
+        
+        // Test Layer 2: Anti-Detection
+        AntiDetectionManager antiDetection = AntiDetectionManager.getInstance();
+        SecurityStatus status = antiDetection.performAntiDetectionChecks();
+        assertNotNull("Security status should be available", status);
+        
+        // Test Layer 3: Stealth Manager
+        StealthManager stealth = StealthManager.getInstance();
+        boolean espSafe = stealth.isOperationSafe(StealthManager.OperationType.ESP_OVERLAY);
+        // ESP should be safe in test environment
+        assertTrue("ESP operation should be safe", espSafe);
+    }
+    
+    @Test
+    public void testESPSystemIntegration() {
+        // Test ESP service lifecycle
+        Intent espIntent = new Intent(getContext(), FloatService.class);
+        ServiceTestRule serviceRule = new ServiceTestRule();
+        
+        IBinder binder = serviceRule.bindService(espIntent);
+        assertNotNull("ESP service should bind successfully", binder);
+        
+        // Test overlay permission
+        boolean hasOverlayPermission = Settings.canDrawOverlays(getContext());
+        assertTrue("Overlay permission should be granted", hasOverlayPermission);
+    }
+}
+```
+
+### 3. Security Testing
+```java
+public class SecurityTestSuite {
+    
+    @Test
+    public void testSignKillDetection() {
+        SignKillDetector detector = SignKillDetector.getInstance(getContext());
+        
+        int threatLevel = detector.performSignKillDetection();
+        
+        // In normal environment, threat level should be safe
+        assertEquals("Threat level should be safe", SignKillDetector.DetectionResult.SAFE, threatLevel);
+    }
+    
+    @Test
+    public void testFridaBypass() {
+        FridaBypass fridaBypass = FridaBypass.getInstance();
+        
+        boolean initialized = fridaBypass.initialize(getContext());
+        assertTrue("Frida bypass should initialize", initialized);
+        
+        boolean activated = fridaBypass.activate();
+        assertTrue("Frida bypass should activate", activated);
+        
+        FridaBypass.BypassStatus status = fridaBypass.getStatus();
+        assertTrue("Bypass should be active", status.isActive);
+    }
+    
+    @Test
+    public void testEmergencyShutdown() {
+        EmergencyProtocol protocol = new EmergencyProtocol();
+        
+        // Test emergency detection
+        boolean emergencyTriggered = protocol.checkEmergencyConditions();
+        assertFalse("Emergency should not be triggered in test", emergencyTriggered);
+        
+        // Test cleanup procedures (without actual shutdown)
+        protocol.testCleanupProcedures();
+    }
+}
+```
+
+## 🔍 Debugging Procedures
+
+### 1. Debug Logging System
+```java
+public class BearLoaderDebugger {
+    private static final String DEBUG_TAG = "BearLoader_Debug";
+    private static boolean debugEnabled = BuildConfig.DEBUG;
+    
+    public static void enableDebugMode() {
+        debugEnabled = true;
+        FLog.info("🔧 Debug mode enabled for BEAR-LOADER");
+    }
+    
+    public static void logSecurityEvent(String event, Object... args) {
+        if (debugEnabled) {
+            String message = String.format(event, args);
+            Log.d(DEBUG_TAG, "🛡️ SECURITY: " + message);
+        }
+    }
+    
+    public static void logESPEvent(String event, Object... args) {
+        if (debugEnabled) {
+            String message = String.format(event, args);
+            Log.d(DEBUG_TAG, "👁️ ESP: " + message);
+        }
+    }
+    
+    public static void logContainerEvent(String event, Object... args) {
+        if (debugEnabled) {
+            String message = String.format(event, args);
+            Log.d(DEBUG_TAG, "📦 CONTAINER: " + message);
+        }
+    }
+    
+    public static String generateDebugReport() {
+        StringBuilder report = new StringBuilder();
+        report.append("🔧 BEAR-LOADER Debug Report\n");
+        report.append("============================\n");
+        
+        // System information
+        report.append("Android Version: ").append(Build.VERSION.RELEASE).append("\n");
+        report.append("API Level: ").append(Build.VERSION.SDK_INT).append("\n");
+        report.append("Device: ").append(Build.MANUFACTURER).append(" ").append(Build.MODEL).append("\n");
+        
+        // Security status
+        report.append("\nSecurity Status:\n");
+        report.append("- Root Access: ").append(Shell.rootAccess() ? "✅" : "❌").append("\n");
+        report.append("- Memory Protection: ").append(checkMemoryProtection() ? "✅" : "❌").append("\n");
+        
+        // ESP status
+        report.append("\nESP Status:\n");
+        report.append("- Overlay Permission: ").append(checkOverlayPermission() ? "✅" : "❌").append("\n");
+        report.append("- Service Running: ").append(checkESPService() ? "✅" : "❌").append("\n");
+        
+        return report.toString();
+    }
+}
+```
+
+### 2. Performance Monitoring
+```java
+public class PerformanceMonitor {
+    private final Map<String, Long> performanceMetrics = new HashMap<>();
+    private final Map<String, Long> startTimes = new HashMap<>();
+    
+    public void startTiming(String operation) {
+        startTimes.put(operation, System.currentTimeMillis());
+    }
+    
+    public void endTiming(String operation) {
+        Long startTime = startTimes.get(operation);
+        if (startTime != null) {
+            long duration = System.currentTimeMillis() - startTime;
+            performanceMetrics.put(operation, duration);
+            
+            if (BuildConfig.DEBUG) {
+                FLog.debug("⏱️ " + operation + " took " + duration + "ms");
+            }
+        }
+    }
+    
+    public Map<String, Long> getPerformanceReport() {
+        return new HashMap<>(performanceMetrics);
+    }
+    
+    public void logPerformanceReport() {
+        FLog.info("📊 Performance Report:");
+        for (Map.Entry<String, Long> entry : performanceMetrics.entrySet()) {
+            FLog.info("- " + entry.getKey() + ": " + entry.getValue() + "ms");
+        }
+    }
+}
+```
+
+### 3. Crash Reporting
+```java
+public class BearLoaderCrashHandler implements Thread.UncaughtExceptionHandler {
+    private final Thread.UncaughtExceptionHandler defaultHandler;
+    private final Context context;
+    
+    public BearLoaderCrashHandler(Context context) {
+        this.context = context;
+        this.defaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+    }
+    
+    @Override
+    public void uncaughtException(Thread thread, Throwable throwable) {
+        try {
+            // Generate crash report
+            String crashReport = generateCrashReport(thread, throwable);
+            
+            // Save crash report
+            saveCrashReport(crashReport);
+            
+            // Perform emergency cleanup
+            performEmergencyCleanup();
+            
+        } catch (Exception e) {
+            // If crash reporting fails, fall back to default handler
+        } finally {
+            // Call default handler
+            if (defaultHandler != null) {
+                defaultHandler.uncaughtException(thread, throwable);
+            }
+        }
+    }
+    
+    private String generateCrashReport(Thread thread, Throwable throwable) {
+        StringBuilder report = new StringBuilder();
+        
+        report.append("🚨 BEAR-LOADER Crash Report\n");
+        report.append("===========================\n");
+        report.append("Time: ").append(new Date()).append("\n");
+        report.append("Thread: ").append(thread.getName()).append("\n");
+        report.append("Exception: ").append(throwable.getClass().getSimpleName()).append("\n");
+        report.append("Message: ").append(throwable.getMessage()).append("\n");
+        
+        // Stack trace
+        report.append("\nStack Trace:\n");
+        for (StackTraceElement element : throwable.getStackTrace()) {
+            report.append("  at ").append(element.toString()).append("\n");
+        }
+        
+        // System information
+        report.append("\nSystem Information:\n");
+        report.append(BearLoaderDebugger.generateDebugReport());
+        
+        return report.toString();
+    }
+}
+```
+
+## 🚀 Deployment Process
+
+### 1. Pre-Deployment Checklist
+```bash
+#!/bin/bash
+# pre_deployment_check.sh
+
+echo "🔍 BEAR-LOADER Pre-Deployment Check"
+echo "===================================="
+
+# Check build configuration
+echo "📋 Checking build configuration..."
+if grep -q "debuggable true" app/build.gradle; then
+    echo "❌ ERROR: Debug mode is enabled in release build"
+    exit 1
+fi
+
+# Check security configurations
+echo "🔒 Checking security configurations..."
+if ! grep -q "minifyEnabled true" app/build.gradle; then
+    echo "⚠️ WARNING: Code obfuscation is disabled"
+fi
+
+# Check signing configuration
+echo "✍️ Checking signing configuration..."
+if ! grep -q "signingConfig signingConfigs.release" app/build.gradle; then
+    echo "❌ ERROR: Release signing configuration not found"
+    exit 1
+fi
+
+# Run security tests
+echo "🧪 Running security tests..."
+./gradlew testDebugUnitTest
+
+# Build release APK
+echo "🏗️ Building release APK..."
+./gradlew assembleRelease
+
+echo "✅ Pre-deployment check completed successfully"
+```
+
+### 2. Build Process
+```bash
+#!/bin/bash
+# build_release.sh
+
+echo "🏗️ BEAR-LOADER Release Build Process"
+echo "====================================="
+
+# Clean previous builds
+echo "🧹 Cleaning previous builds..."
+./gradlew clean
+
+# Update version information
+echo "📝 Updating version information..."
+VERSION_NAME=$(git describe --tags --always)
+VERSION_CODE=$(git rev-list --count HEAD)
+
+# Update build.gradle with version info
+sed -i "s/versionName \".*\"/versionName \"$VERSION_NAME\"/" app/build.gradle
+sed -i "s/versionCode .*/versionCode $VERSION_CODE/" app/build.gradle
+
+# Build native libraries
+echo "🔨 Building native libraries..."
+cd app/src/main/jni
+ndk-build clean
+ndk-build -j$(nproc)
+cd ../../../../
+
+# Build release APK
+echo "📦 Building release APK..."
+./gradlew assembleRelease
+
+# Sign APK
+echo "✍️ Signing APK..."
+UNSIGNED_APK="app/build/outputs/apk/release/app-release-unsigned.apk"
+SIGNED_APK="app/build/outputs/apk/release/BearLoader-v$VERSION_NAME.apk"
+
+jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+    -keystore keys/release.keystore \
+    -storepass "$KEYSTORE_PASSWORD" \
+    -keypass "$KEY_PASSWORD" \
+    "$UNSIGNED_APK" release
+
+zipalign -v 4 "$UNSIGNED_APK" "$SIGNED_APK"
+
+echo "✅ Release build completed: $SIGNED_APK"
+```
+
+### 3. Security Verification
+```bash
+#!/bin/bash
+# verify_security.sh
+
+echo "🔒 BEAR-LOADER Security Verification"
+echo "===================================="
+
+APK_PATH="$1"
+if [ -z "$APK_PATH" ]; then
+    echo "❌ ERROR: APK path required"
+    exit 1
+fi
+
+# Verify APK signature
+echo "✍️ Verifying APK signature..."
+jarsigner -verify -verbose -certs "$APK_PATH"
+if [ $? -ne 0 ]; then
+    echo "❌ ERROR: APK signature verification failed"
+    exit 1
+fi
+
+# Check for debugging flags
+echo "🔍 Checking for debugging flags..."
+aapt dump badging "$APK_PATH" | grep -q "debuggable='true'"
+if [ $? -eq 0 ]; then
+    echo "❌ ERROR: APK has debugging enabled"
+    exit 1
+fi
+
+# Verify obfuscation
+echo "🔀 Verifying code obfuscation..."
+unzip -q "$APK_PATH" -d temp_apk/
+if grep -r "com\.happy\.pro" temp_apk/classes.dex > /dev/null; then
+    echo "⚠️ WARNING: Package names may not be properly obfuscated"
+fi
+rm -rf temp_apk/
+
+# Check native libraries
+echo "📚 Checking native libraries..."
+unzip -l "$APK_PATH" | grep -q "lib.*\.so"
+if [ $? -eq 0 ]; then
+    echo "✅ Native libraries found"
+else
+    echo "⚠️ WARNING: No native libraries found"
+fi
+
+echo "✅ Security verification completed"
+```
+
+### 4. Deployment Scripts
+```bash
+#!/bin/bash
+# deploy_release.sh
+
+echo "🚀 BEAR-LOADER Deployment Process"
+echo "=================================="
+
+APK_PATH="$1"
+DEPLOY_TYPE="$2" # alpha, beta, production
+
+if [ -z "$APK_PATH" ] || [ -z "$DEPLOY_TYPE" ]; then
+    echo "❌ ERROR: Usage: deploy_release.sh <apk_path> <deploy_type>"
+    exit 1
+fi
+
+# Run security verification
+./verify_security.sh "$APK_PATH"
+if [ $? -ne 0 ]; then
+    echo "❌ ERROR: Security verification failed"
+    exit 1
+fi
+
+# Generate changelog
+echo "📝 Generating changelog..."
+git log --oneline --since="$(git describe --tags --abbrev=0)" > CHANGELOG.md
+
+# Upload to distribution platform
+case "$DEPLOY_TYPE" in
+    "alpha")
+        echo "🧪 Deploying to alpha testing..."
+        # Upload to internal testing
+        ;;
+    "beta")
+        echo "🧪 Deploying to beta testing..."
+        # Upload to beta testing
+        ;;
+    "production")
+        echo "🏭 Deploying to production..."
+        # Upload to production
+        ;;
+    *)
+        echo "❌ ERROR: Invalid deploy type: $DEPLOY_TYPE"
+        exit 1
+        ;;
+esac
+
+# Update KeyAuth system
+echo "🔑 Updating KeyAuth configuration..."
+# Update version info in KeyAuth system
+
+# Send notifications
+echo "📧 Sending deployment notifications..."
+# Notify team of successful deployment
+
+echo "✅ Deployment completed successfully"
+```
+
+## 📊 Quality Assurance
+
+### Automated Testing Pipeline
+```yaml
+# .github/workflows/bear-loader-ci.yml
+name: BEAR-LOADER CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run security scan
+        run: |
+          # Run static analysis
+          ./gradlew lint
+          
+          # Check for hardcoded secrets
+          truffleHog --regex --entropy=False .
+          
+          # Verify dependencies
+          ./gradlew dependencyCheckAnalyze
+
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+        
+      - name: Build and test
+        run: |
+          ./gradlew clean
+          ./gradlew assembleDebug
+          ./gradlew testDebugUnitTest
+          
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: app/build/test-results/
+```
+
+### Performance Testing
+```java
+@RunWith(AndroidJUnit4.class)
+public class PerformanceTest {
+    
+    @Test
+    public void testESPPerformance() {
+        PerformanceMonitor monitor = new PerformanceMonitor();
+        
+        // Test ESP rendering performance
+        monitor.startTiming("esp_render");
+        for (int i = 0; i < 100; i++) {
+            // Simulate ESP rendering cycle
+            renderESPFrame();
+        }
+        monitor.endTiming("esp_render");
+        
+        // ESP rendering should complete within reasonable time
+        long renderTime = monitor.getPerformanceReport().get("esp_render");
+        assertTrue("ESP rendering too slow: " + renderTime + "ms", renderTime < 1000);
+    }
+    
+    @Test
+    public void testMemoryUsage() {
+        Runtime runtime = Runtime.getRuntime();
+        
+        long beforeMemory = runtime.totalMemory() - runtime.freeMemory();
+        
+        // Perform memory-intensive operations
+        for (int i = 0; i < 1000; i++) {
+            createESPElements();
+        }
+        
+        long afterMemory = runtime.totalMemory() - runtime.freeMemory();
+        long memoryIncrease = afterMemory - beforeMemory;
+        
+        // Memory increase should be reasonable
+        assertTrue("Memory usage too high: " + memoryIncrease + " bytes", 
+                   memoryIncrease < 50 * 1024 * 1024); // 50MB limit
+    }
+}
+```
+
+## 📈 Monitoring & Analytics
+
+### Runtime Monitoring
+```java
+public class RuntimeMonitor {
+    private final Map<String, Object> metrics = new HashMap<>();
+    
+    public void collectMetrics() {
+        // Performance metrics
+        metrics.put("memory_usage", getMemoryUsage());
+        metrics.put("cpu_usage", getCPUUsage());
+        metrics.put("esp_fps", getESPFrameRate());
+        
+        // Security metrics
+        metrics.put("threats_detected", getThreatCount());
+        metrics.put("security_layers_active", getActiveSecurityLayers());
+        
+        // User metrics
+        metrics.put("session_duration", getSessionDuration());
+        metrics.put("features_used", getUsedFeatures());
+    }
+    
+    public void sendMetrics() {
+        // Send metrics to analytics service
+        // Ensure user privacy is maintained
+    }
+}
+```
+
+### Error Tracking
+```java
+public class ErrorTracker {
+    public static void trackError(String category, String error, Map<String, String> context) {
+        try {
+            ErrorReport report = new ErrorReport();
+            report.category = category;
+            report.error = error;
+            report.context = context;
+            report.timestamp = System.currentTimeMillis();
+            report.version = BuildConfig.VERSION_NAME;
+            
+            // Send to error tracking service
+            sendErrorReport(report);
+        } catch (Exception e) {
+            // Fallback: log locally
+            FLog.error("Failed to track error: " + e.getMessage());
+        }
+    }
+}
+```
+

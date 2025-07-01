@@ -1,0 +1,19 @@
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- External storage for APK updates and large files -->
+    <external-path name="external_files" path="." />
+    
+    <!-- App-specific external files for downloads -->
+    <external-files-path name="external_app_files" path="." />
+    
+    <!-- Internal files directory for configs and libraries -->
+    <files-path name="internal_files" path="." />
+    
+    <!-- Cache directory for temporary downloads -->
+    <cache-path name="cache_files" path="." />
+    
+    <!-- Downloads directory (specific paths for BEAR-LOADER) -->
+    <external-files-path name="downloads" path="downloads/" />
+    <external-files-path name="updates" path="updates/" />
+    <files-path name="config" path="config/" />
+    <files-path name="libs" path="libs/" />
+</paths>

@@ -1,0 +1,247 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BEAR-LOADER Container System Guide
+
+## Overview
+The BEAR-LOADER Container System allows the application to function without root access by creating an isolated environment where target apps can be loaded and modified. This revolutionary approach enables ESP and modding capabilities on non-rooted devices.
+
+## 🏗️ Container Architecture
+
+### Core Components
+- **BearContainerManager**: [BearContainerManager.java](mdc:app/src/main/java/com/happy/pro/container/BearContainerManager.java) - Main container orchestrator
+- **StealthContainer**: [StealthContainer.java](mdc:app/src/main/java/com/happy/pro/stealth/StealthContainer.java) - Secure execution environment
+- **ContainerSignatureVerifier**: [ContainerSignatureVerifier.java](mdc:app/src/main/java/com/happy/pro/container/ContainerSignatureVerifier.java) - Container security verification
+
+## 🔧 How It Works
+
+### 1. App Injection Process
+```java
+// Initialize container
+BearContainerManager container = BearContainerManager.getInstance(context);
+
+// Get target app APK
+String apkPath = getPackageManager().getApplicationInfo(packageName, 0).sourceDir;
+
+// Inject app into container
+boolean success = container.injectApp(apkPath, packageName);
+```
+
+### 2. Container Isolation
+- Creates isolated file system space
+- Separate process execution
+- Custom ClassLoader for code injection
+- Intercepted system calls
+
+### 3. ESP Integration
+- Overlay rendering without root
+- Memory reading through container
+- Hook injection via ClassLoader
+- Real-time game state monitoring
+
+## 📦 Container Features
+
+### Non-Root Capabilities
+1. **App Loading**
+   - Dynamic APK loading
+   - Resource isolation
+   - Process management
+
+2. **Code Injection**
+   - ClassLoader manipulation
+   - Method hooking
+   - Runtime modification
+
+3. **ESP Functionality**
+   - Floating overlays
+   - Screen reading
+   - Touch simulation
+   - Limited memory access
+
+### Security Features
+1. **Signature Verification**
+   - Validates app authenticity
+   - Prevents tampering
+   - Trust chain verification
+
+2. **Environment Protection**
+   - Anti-debugging measures
+   - Detection avoidance
+   - Stealth operation
+
+3. **Resource Management**
+   - Memory limits
+   - CPU throttling
+   - Storage isolation
+
+## 🚀 Implementation Guide
+
+### Setting Up Container Mode
+```java
+public class ContainerModeActivity extends Activity {
+    private BearContainerManager containerManager;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        // Initialize container
+        containerManager = BearContainerManager.getInstance(this);
+        
+        // Check if container is ready
+        if (containerManager.isContainerInitialized()) {
+            loadTargetApp();
+        }
+    }
+    
+    private void loadTargetApp() {
+        String targetPackage = "com.tencent.ig";
+        
+        try {
+            // Get APK path
+            ApplicationInfo appInfo = getPackageManager()
+                .getApplicationInfo(targetPackage, 0);
+            String apkPath = appInfo.sourceDir;
+            
+            // Inject into container
+            if (containerManager.injectApp(apkPath, targetPackage)) {
+                startESPService();
+            }
+        } catch (Exception e) {
+            Log.e("Container", "Failed to load app", e);
+        }
+    }
+}
+```
+
+### ESP Service for Container Mode
+```java
+public class ContainerESPService extends Service {
+    private BearContainerManager.ContainerApp containerApp;
+    
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        String packageName = intent.getStringExtra("package");
+        
+        // Get container app
+        containerApp = BearContainerManager.getInstance(this)
+            .getLoadedApp(packageName);
+        
+        if (containerApp != null && containerApp.isLoaded) {
+            startESPOverlay();
+        }
+        
+        return START_STICKY;
+    }
+    
+    private void startESPOverlay() {
+        // Create floating window
+        // Render ESP elements
+        // Monitor game state
+    }
+}
+```
+
+## 🛡️ Container Security
+
+### Threat Mitigation
+1. **Signature Attacks**
+   - SignKillDetector integration
+   - Real-time monitoring
+   - Automatic response
+
+2. **Detection Avoidance**
+   - Process name spoofing
+   - Memory pattern obfuscation
+   - Behavior normalization
+
+3. **Data Protection**
+   - Encrypted storage
+   - Secure communication
+   - Memory protection
+
+### Best Practices
+1. Always verify app signatures
+2. Monitor container health
+3. Implement timeout mechanisms
+4. Clean up resources properly
+5. Handle edge cases gracefully
+
+## 📊 Container vs Root Mode
+
+| Feature | Container Mode | Root Mode |
+|---------|---------------|-----------|
+| Installation | No root needed | Requires root |
+| ESP Capabilities | Limited | Full |
+| Memory Access | Restricted | Unrestricted |
+| Detection Risk | Lower | Higher |
+| Performance | Good | Excellent |
+| Compatibility | Most devices | Rooted only |
+| Stability | Very stable | Stable |
+
+## 🔍 Troubleshooting
+
+### Common Issues
+1. **App Won't Load**
+   - Check APK path
+   - Verify signatures
+   - Ensure sufficient permissions
+
+2. **ESP Not Working**
+   - Verify overlay permission
+   - Check container status
+   - Review security logs
+
+3. **Performance Issues**
+   - Optimize resource usage
+   - Reduce ESP update rate
+   - Clear container cache
+
+### Debug Commands
+```java
+// Get container status
+String status = containerManager.getContainerStatus();
+
+// Check loaded apps
+Map<String, ContainerApp> apps = containerManager.getLoadedApps();
+
+// Verify security state
+boolean isSafe = StealthManager.getInstance().isOperationSafe(
+    StealthManager.OperationType.CONTAINER_INJECTION
+);
+```
+
+## 🚧 Limitations
+
+### Container Mode Restrictions
+1. Cannot modify system files
+2. Limited memory manipulation
+3. No kernel-level access
+4. Restricted process control
+5. Some anti-cheat bypasses unavailable
+
+### Workarounds
+1. Use overlay techniques for visual ESP
+2. Implement pattern recognition
+3. Utilize accessibility services
+4. Leverage VirtualXposed framework
+5. Apply runtime hooking
+
+## 🔄 Future Enhancements
+
+### Planned Features
+1. **Multi-App Containers**: Run multiple apps simultaneously
+2. **Plugin System**: Modular ESP components
+3. **Cloud Sync**: Settings and profiles backup
+4. **AI Enhancement**: Machine learning for better detection avoidance
+5. **Performance Mode**: Optimized rendering pipeline
+
+### Research Areas
+1. Advanced ClassLoader techniques
+2. Native library injection without root
+3. Improved memory reading methods
+4. Better anti-detection algorithms
+5. Cross-platform container support
+

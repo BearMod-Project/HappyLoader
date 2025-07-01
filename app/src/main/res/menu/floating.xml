@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/visual"
+        android:icon="@drawable/visual"
+        android:title="Visual"
+        app:cnb_iconColor="@color/button"/>
+
+    <item
+        android:id="@+id/inventory"
+        android:icon="@drawable/loot"
+        android:title="Inventory"
+        app:cnb_iconColor="@color/button" />
+    <item
+        android:id="@+id/aimbotss"
+        android:icon="@drawable/ic_aim"
+        android:title="Aimbot"
+        app:cnb_iconColor="@color/button"/>
+    <item
+        android:id="@+id/memory"
+        android:icon="@drawable/icon_toast_alert"
+        android:title="Memory"
+        app:cnb_iconColor="@color/button"/>
+
+</menu>

@@ -1,0 +1,186 @@
+{
+  "app_info": {
+    "name": "BEAR-LOADER",
+    "version": "1.3",
+    "version_code": 100,
+    "build_date": "2025-01-27",
+    "min_android_version": 28,
+    "target_android_version": 35,
+    "description": "Advanced Android Loader with Stealth Technology"
+  },
+  "keyauth_integration": {
+    "api_version": "1.2",
+    "app_name": "BEAR-LOADER",
+    "version": "1.3",
+    "hash_validation": true,
+    "hwid_check": true,
+    "session_validation": true,
+    "auto_ban": true
+  },
+  "security_features": {
+    "anti_debug": true,
+    "anti_vm": true,
+    "anti_emulator": true,
+    "memory_protection": true,
+    "signature_verification": true,
+    "stealth_mode": true,
+    "obfuscation": true,
+    "encryption_enabled": true
+  },
+  "authentication": {
+    "max_login_attempts": 3,
+    "session_timeout_minutes": 60,
+    "require_hwid": true,
+    "multi_device_limit": 2,
+    "ip_binding": false,
+    "two_factor_auth": false
+  },
+  "license_tiers": {
+    "trial": {
+      "duration_days": 3,
+      "max_devices": 1,
+      "features": [
+        "basic_esp",
+        "limited_aimbot",
+        "watermark"
+      ],
+      "restrictions": {
+        "daily_usage_hours": 2,
+        "concurrent_sessions": 1
+      }
+    },
+    "premium": {
+      "duration_days": 30,
+      "max_devices": 2,
+      "features": [
+        "full_esp",
+        "advanced_aimbot",
+        "memory_hacking",
+        "container_mode",
+        "custom_configs"
+      ],
+      "restrictions": {
+        "daily_usage_hours": 24,
+        "concurrent_sessions": 1
+      }
+    },
+    "enterprise": {
+      "duration_days": 365,
+      "max_devices": 5,
+      "features": [
+        "all_features",
+        "priority_support",
+        "custom_development",
+        "dedicated_server",
+        "api_access"
+      ],
+      "restrictions": {
+        "daily_usage_hours": 24,
+        "concurrent_sessions": 3
+      }
+    }
+  },
+  "supported_applications": {
+    "pubg_global": {
+      "package_name": "com.tencent.ig",
+      "version_support": ["3.8.0", "3.9.0"],
+      "status": "active",
+      "features": {
+        "esp": ["player", "skin", "item", "vehicle", "distance", "health"],
+        "aimbot": ["aim_assist", "smooth_aim", "fov_circle"],
+        "memory": ["buttle_tricker", "jump_hack", "wall_hack"]
+      }
+    },
+    "pubg_korea": {
+      "package_name": "com.pubg.krmobile",
+      "version_support": ["3.8.0", "3.9.0"],
+      "status": "active",
+      "features": {
+        "esp": ["player", "skin", "item", "vehicle", "distance", "health"],
+        "aimbot": ["aim_assist", "smooth_aim", "fov_circle"],
+        "memory": ["buttle_tricker", "jump_hack", "wall_hack"]
+      }
+    },
+"pubg_taiwan": {
+  "package_name": "com.reko.pubgm",
+  "version_support": ["3.8.0", "3.9.0"],
+  "status": "active",
+  "features": {
+    "esp": ["player", "skin", "item", "vehicle", "distance", "health"],
+    "aimbot": ["aim_assist", "smooth_aim", "fov_circle"],
+    "memory": ["buttle_tricker", "jump_hack", "wall_hack"]
+  }
+},
+"pubg_vietnam": {
+  "package_name": "com.vng.pubgmobile",
+  "version_support": ["3.8.0", "3.9.0"],
+  "status": "active",
+  "features": {
+    "esp": ["player", "skin", "item", "vehicle", "distance", "health"],
+    "aimbot": ["aim_assist", "smooth_aim", "fov_circle"],
+    "memory": ["buttle_tricker", "jump_hack", "wall_hack"]
+  }
+},
+    "bgmi_india": {
+      "package_name": "com.battlegroundmobile.india",
+      "version_support": ["3.8.0", "3.9.0"],
+      "status": "active",
+      "features": {
+        "esp": ["player", "skin", "item", "vehicle", "distance", "health"],
+        "aimbot": ["aim_assist", "smooth_aim", "fov_circle"],
+        "memory": ["buttle_tricker", "jump_hack", "wall_hack"]
+      }
+    }
+},
+  "update_system": {
+    "auto_update": true,
+    "check_interval_hours": 6,
+    "force_update_critical": true,
+    "update_channels": ["stable", "beta"],
+    "rollback_enabled": true
+  },
+  "logging": {
+    "log_level": "INFO",
+    "remote_logging": true,
+    "error_reporting": true,
+    "analytics": true,
+    "user_tracking": false
+  },
+  "performance": {
+    "memory_optimization": true,
+    "cpu_optimization": true,
+    "battery_optimization": true,
+    "network_compression": true,
+    "cache_enabled": true
+  },
+  "ui_config": {
+    "theme": "dark",
+    "language_support": ["en", "zh", "ar", "es", "ru"],
+    "accessibility": true,
+    "animations": true,
+    "sound_effects": false
+  },
+  "network": {
+    "timeout_seconds": 30,
+    "retry_attempts": 3,
+    "ssl_pinning": true,
+    "certificate_validation": true,
+    "proxy_support": false
+  },
+  "compliance": {
+    "gdpr_compliant": true,
+    "ccpa_compliant": true,
+    "data_retention_days": 90,
+    "privacy_policy_version": "2.1",
+    "terms_of_service_version": "3.0"
+  },
+  "developer": {
+    "debug_mode": false,
+    "crash_reporting": true,
+    "performance_monitoring": true,
+    "feature_flags": {
+      "experimental_features": false,
+      "beta_testing": false
+    }
+  }
+} 

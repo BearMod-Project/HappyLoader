@@ -1,0 +1,179 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# BEAR-LOADER 3.0.0 Enterprise Architecture Guide
+
+## Overview
+BEAR-LOADER is an advanced Android loader/container application implementing an 8-layer military-grade security architecture for game modding and ESP functionality. It supports both root and non-root modes with sophisticated anti-detection mechanisms.
+
+## 🏗️ 8-Layer Security Architecture
+
+### 🔐 LAYER 8: StealthOperations (Ultra-Advanced Military-Grade Controller)
+- **Location**: [StealthManager.java](mdc:app/src/main/java/com/happy/pro/security/StealthManager.java)
+- **Purpose**: Top-level orchestration of all security operations
+- **Key Features**:
+  - Real-time threat assessment
+  - Dynamic operation approval/denial
+  - Coordinated security response
+
+### 🏢 LAYER 7: KeyAuthBridge (Unified Authentication Gateway)
+- **Location**: [KeyAuthClient.java](mdc:app/src/main/java/com/happy/pro/server/KeyAuthClient.java), [AuthenticationManager.java](mdc:app/src/main/java/com/happy/pro/server/AuthenticationManager.java)
+- **Purpose**: Centralized authentication and license management
+- **Key Features**:
+  - KeyAuth API integration
+  - License validation
+  - Session management
+
+### 🔍 LAYER 6: SignKillDetector (Signature Bypass Protection)
+- **Location**: [SignKillDetector.java](mdc:app/src/main/java/com/happy/pro/security/SignKillDetector.java)
+- **Purpose**: Detect and prevent signature-based attacks
+- **Key Features**:
+  - Real-time signature monitoring
+  - Attack pattern recognition
+  - Automated countermeasures
+
+### 🤖 LAYER 5: StealthComponents (AI-Powered Adaptive Security)
+- **Location**: [SecurityAnalyzer.java](mdc:app/src/main/java/com/bearmod/security/ai/SecurityAnalyzer.java)
+- **Purpose**: AI-driven security analysis and response
+- **Key Features**:
+  - Machine learning threat detection
+  - Behavioral analysis
+  - Adaptive security policies
+
+### 🏰 LAYER 4: StealthContainer (Secure Execution Environment)
+- **Location**: [StealthContainer.java](mdc:app/src/main/java/com/happy/pro/stealth/StealthContainer.java)
+- **Purpose**: Isolated execution environment for operations
+- **Key Features**:
+  - Process isolation
+  - Resource management
+  - Secure communication channels
+
+### 🥷 LAYER 3: StealthManager (Intelligent Threat Assessment)
+- **Location**: [StealthManager.java](mdc:app/src/main/java/com/happy/pro/stealth/StealthManager.java)
+- **Purpose**: Real-time threat evaluation and response
+- **Key Features**:
+  - Environment scanning
+  - Risk assessment
+  - Operation authorization
+
+### 🛡️ LAYER 2: AntiDetectionManager (Environmental Safety)
+- **Location**: [AntiDetectionManager.java](mdc:app/src/main/java/com/happy/pro/security/AntiDetectionManager.java)
+- **Purpose**: Basic anti-detection and environment protection
+- **Key Features**:
+  - Root detection bypass
+  - Emulator detection
+  - Debugger protection
+
+### 🔐 LAYER 1: KeyAuth + BearSecurity (Authentication & Memory Protection)
+- **Location**: [BearMemoryProtection.java](mdc:app/src/main/java/com/happy/pro/security/BearMemoryProtection.java)
+- **Purpose**: Foundation security layer
+- **Key Features**:
+  - Memory protection
+  - Basic authentication
+  - Encryption services
+
+## 📁 Project Structure
+
+### Core Components
+- **MainActivity**: [MainActivity.java](mdc:app/src/main/java/com/happy/pro/activity/MainActivity.java) - Main application entry point
+- **FloatService**: [FloatService.java](mdc:app/src/main/java/com/happy/pro/floating/FloatService.java) - Floating overlay service for ESP
+- **Native Integration**: [JNI directory](mdc:app/src/main/jni) - Native C++ components
+
+### Security Modules
+- **FridaBypass**: [FridaBypass.java](mdc:app/src/main/java/com/happy/pro/security/FridaBypass.java) - Advanced Frida detection bypass
+- **SignatureVerifier**: [SignatureVerifier.java](mdc:app/src/main/java/com/happy/pro/security/SignatureVerifier.java) - App signature validation
+- **HookManager**: [HookManager.java](mdc:app/src/main/java/com/happy/pro/hooks/HookManager.java) - Hook management system
+
+### Container System
+- **BearContainerManager**: [BearContainerManager.java](mdc:app/src/main/java/com/happy/pro/container/BearContainerManager.java) - Non-root app container
+- **ContainerSignatureVerifier**: [ContainerSignatureVerifier.java](mdc:app/src/main/java/com/happy/pro/container/ContainerSignatureVerifier.java) - Container security
+
+## 🔧 Key Features
+
+### Root Mode
+- Direct system access
+- Kernel module support
+- Advanced memory manipulation
+- Full ESP capabilities
+
+### Non-Root Mode (Container)
+- App containerization
+- Dynamic injection
+- Limited but functional ESP
+- No system modifications required
+
+### ESP Features
+- Player location tracking
+- Item ESP
+- Aimbot capabilities
+- Magic bullet
+- Custom overlays
+
+## 🛠️ Development Guidelines
+
+### Security Best Practices
+1. Always validate environment before operations
+2. Use StealthManager for operation approval
+3. Implement proper error handling
+4. Log security events for analysis
+5. Test on multiple devices and Android versions
+
+### Code Organization
+1. Security layers should communicate through defined interfaces
+2. Each layer handles its specific responsibilities
+3. Upper layers orchestrate lower layers
+4. Maintain separation of concerns
+
+### Testing
+1. Test both root and non-root modes
+2. Verify anti-detection mechanisms
+3. Check signature validation
+4. Ensure ESP features work correctly
+5. Test on target games (PUBG variants)
+
+## 🚀 Building and Deployment
+
+### Prerequisites
+- Android Studio Arctic Fox or later
+- NDK for native components
+- Root access (for root mode testing)
+- Target APKs for testing
+
+### Build Process
+```bash
+# Debug build
+./gradlew assembleDebug
+
+# Release build
+./gradlew assembleRelease
+```
+
+### Signing
+- Use the configured keystore: `C:\Users\BearOwner\BearOwner.jks`
+- Ensure proper signing for production releases
+
+## ⚠️ Important Notes
+
+1. This is a sophisticated modding tool - use responsibly
+2. Anti-detection is not guaranteed against all detection methods
+3. Regular updates required to maintain compatibility
+4. Test thoroughly before production deployment
+5. Monitor security logs for potential threats
+
+## 📱 Supported Games
+- PUBG Mobile Global (com.tencent.ig)
+- PUBG Mobile Korea (com.pubg.krmobile)
+- PUBG Mobile Vietnam (com.vng.pubgmobile)
+- PUBG Mobile Taiwan (com.rekoo.pubgm)
+- BGMI (com.pubg.imobile)
+
+## 🔄 Update Strategy
+1. Monitor game updates for changes
+2. Update native offsets as needed
+3. Enhance security layers for new threats
+4. Test all features after updates
+5. Deploy updates through KeyAuth system
+
+

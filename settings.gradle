@@ -1,0 +1,2 @@
+rootProject.name = "COSMIC M1"
+include(":app")
