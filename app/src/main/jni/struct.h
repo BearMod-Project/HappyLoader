@@ -1,12 +1,13 @@
-#ifndef BEAR_LOADER_STRUCT_H
-#define BEAR_LOADER_STRUCT_H
-
+#ifndef ZEROPC_DEV_IMPORTANT_STRUCT_H
+#define ZEROPC_DEV_IMPORTANT_STRUCT_H
 #include "class.h"
-
 #define maxplayerCount 100
 #define maxvehicleCount 50
 #define maxitemsCount 400
 #define maxgrenadeCount 10
+#define maxzonesCount 10
+#define maxboxitemsCount 10
+
 
 struct PlayerBone {
     bool isBone=false;
@@ -25,7 +26,8 @@ struct PlayerBone {
     Vec2 rKn;
     Vec2 lAn;
     Vec2 rAn;
-    Vec2 root;
+    Vec2 head;
+    //Vec2 ids[100];
 };
 
 struct PlayerWeapon {
@@ -44,44 +46,58 @@ enum Mode {
 struct Options {
     int aimbotmode;
     int openState;
+    int aimT;
+    int aimingState;
+    bool ignoreBot;
+    bool tracingStatus;
     int priority;
     bool pour;
     int aimingRange;
+    int aimingDist;
+    int aimingSpeed;
+    int touchSpeed;
+    int recCompe;
+    int aimBullet;
+    bool ignoreAi;
+    float Smoothing;
+    bool InputInversion;
+    int touchSize;
+    int touchX;
+    int touchY;
+    int recCompe1;
+    int recCompe2;
+    float recScope[9];
+    bool customScope;
 };
 
-struct Memory {
+struct OtherFeature {
     bool LessRecoil;
     bool ZeroRecoil;
     bool InstantHit;
     bool FastShootInterval;
     bool HitX;
     bool SmallCrosshair;
-    bool FastSwitchWeapon;
     bool NoShake;
-    bool WideView;
-    bool SpeedKnock;
     bool Aimbot;
-    bool HeadShot;
+    bool FastSwitchWeapon;
+    int WideView;
 };
 
 struct Request {
     int Mode;
     Options options;
-    Memory memory;
+    OtherFeature otherFeature;
     int ScreenWidth;
     int ScreenHeight;
-};
-
-struct SetValue {
-    int mode;
-    int type;
+    Vec2 radarPos;
+    float radarSize;
 };
 
 struct VehicleData {
     char VehicleName[50];
-    float Health;
-    float Fuel;
     float Distance;
+    float Fuel;
+    float Health;
     Vec3 Location;
 };
 
@@ -99,27 +115,46 @@ struct GrenadeData {
 
 struct PlayerData {
     char PlayerNameByte[100];
+    char PlayerNation[100];
+    char PlayerUID[100];
     int TeamID;
     float Health;
+    float Healthy;
     float Distance;
     bool isBot;
-    bool isKnocked;  // Added for BEAR-LOADER 3.0.0 compatibility
+    bool isVisible;
     Vec3 HeadLocation;
+    Vec2 RadarLocation;
     PlayerWeapon Weapon;
     PlayerBone Bone;
+    int StatusPlayer;
 };
+
+struct BoxItemData {
+    int itemCount;
+    int itemID[50];
+    float Distance;
+    Vec3 Location;
+};
+
 
 struct Response {
     bool Success;
+    bool InLobby;
     int PlayerCount;
     int VehicleCount;
     int ItemsCount;
+    int BoxItemsCount;
     int GrenadeCount;
     float fov;
     PlayerData Players[maxplayerCount];
     VehicleData Vehicles[maxvehicleCount];
     ItemData Items[maxitemsCount];
     GrenadeData Grenade[maxgrenadeCount];
+    BoxItemData BoxItems[maxboxitemsCount];
+
 };
 
-#endif //BEAR_LOADER_STRUCT_H
+
+
+#endif //ZEROPC_DEV_IMPORTANT_STRUCT_H
